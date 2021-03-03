@@ -1,0 +1,12 @@
+.env
+/node_modules
+
+client/node_modules
+client/build
+
+.DS_Store
+
+start_mongo.sh
+stop_mongo.sh
+
+.vscode
