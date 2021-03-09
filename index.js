@@ -26,26 +26,17 @@ const itemsSchema = {
 
 const Item = mongoose.model("Item", itemsSchema);
 
-const item1 = new Item({
-  name: "Welcome to your todolist!",
-});
+// const item1 = new Item({
+//   name: "Welcome to your todolist!",
+// });
 
-const item2 = new Item({
-  name: "Hit the + button to add a new item",
-});
+// const item2 = new Item({
+//   name: "Hit the + button to add a new item",
+// });
 
-const item3 = new Item({
-  name: "Hit the trash icon to delete an item.",
-});
-
-const defaultItems = [item1, item2, item3];
-
-// const listSchema = {
-//   name: String,
-//   items: [itemsSchema],
-// };
-
-// const List = mongoose.model("List", listSchema);
+// const item3 = new Item({
+//   name: "Hit the trash icon to delete an item.",
+// });
 
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
@@ -53,19 +44,28 @@ app.get("/", (req, res) => {
 
 app.get("/entirelist", (req, res) => {
   Item.find({}, function (err, foundItems) {
-    if (foundItems.length === 0) {
-      Item.insertMany(defaultItems, function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Successfully saved default items to DB.");
-        }
-      });
-      res.redirect("/entirelist");
+    if (err) {
+      console.log(err);
     } else {
-      res.send(foundItems);
+      console.log(foundItems);
     }
+    res.send(foundItems);
   });
+  // Item.find({}, function (err, foundItems) {
+  //   if (foundItems.length === 0) {
+  //     console.log("no posts yet...");
+  //     // Item.insert(defaultItems, function (err) {
+  //     //   if (err) {
+  //     //     console.log(err);
+  //     //   } else {
+  //     //     console.log("Successfully saved default items to DB.");
+  //     //   }
+  //     // });
+  //     // res.redirect("/entirelist");
+  //   } else {
+  //     res.send(foundItems);
+  //   }
+  // });
 });
 
 // app.get("/:customListName", function (req, res) {
