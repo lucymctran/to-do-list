@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import List from "./components/ToDoList.js";
 import TextSubmission from "./components/TextSubmission.js";
 
 const App = () => {
+  const [post, setPost] = useState("");
   const [list, setList] = useState([]);
+
+  const handlePost = (post) => {
+    axios.post("/post", { post }).then(setPost(post));
+  };
+
+  const handleDelete = (postID) => {
+    axios.post("/delete", { postID }).then(setPost(postID));
+  };
 
   useEffect(() => {
     axios.get("/entirelist").then((response) => {
       setList(response.data);
     });
-  }, []);
-
-  // const toDoList = ["What do I need to do today?"];
-
-  // const handlePost = (post) => {
-  //   setList(list.concat(post));
-  // };
-
-  const handlePost = (post) => {
-    setList(post);
-  };
+  }, [post]);
 
   return (
     <div className="ui center aligned container">
@@ -37,7 +35,7 @@ const App = () => {
         </div>
         <div className="row">
           <div className="column">
-            <List list={list} />
+            <List list={list} toTransfer={handleDelete} />
           </div>
         </div>
       </div>

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ToDoList = (props) => {
-  const { list } = props;
-  console.log(list);
+  const { list, toTransfer } = props;
+
   const handleDelete = (event) => {
-    console.log(event.target.value);
+    event.preventDefault();
     const postID = event.target.value;
-    axios.post("/delete", { postID });
+    toTransfer(postID);
   };
 
   return (
@@ -21,7 +21,7 @@ const ToDoList = (props) => {
           </div>
         ) : (
           list.map((list) => (
-            <div className="ui middle aligned divided list">
+            <div className="ui middle aligned divided list" key={list._id}>
               <div className="item">
                 <div className="right floated content">
                   <button
@@ -45,7 +45,3 @@ const ToDoList = (props) => {
 };
 
 export default ToDoList;
-
-{
-  /* <input type="checkbox" value={list._id} onClick={handleDelete} /> */
-}

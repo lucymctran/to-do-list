@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const TextSubmission = (props) => {
-  // const { toPost } = props;
   const { toTransfer } = props;
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // toPost(post);
-    axios.post("/post", { post });
-    setPost([]);
-    handleTransfer();
-  };
-
-  const handleTransfer = () => {
-    axios.get("/entirelist").then((response) => {
-      toTransfer(response.data);
-    });
+    toTransfer(post);
+    setPost("");
   };
 
   return (
@@ -29,7 +20,6 @@ const TextSubmission = (props) => {
             placeholder="Enter entry"
             value={post}
             onChange={(e) => {
-              console.log(e.target.value);
               setPost(e.target.value);
             }}
           />
